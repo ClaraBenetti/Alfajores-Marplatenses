@@ -1,0 +1,585 @@
+/* =========================================================
+   [NOMBRE DE LA MARCA] — Alfajores artesanales
+   Paleta: chocolate oscuro, café, marrón medio, crema, beige,
+   blanco roto, con acentos dorados muy sutiles.
+   ========================================================= */
+
+:root {
+  --chocolate: #2A1810;
+  --cafe: #4A2C1C;
+  --marron: #8A5B39;
+  --marron-claro: #B6875C;
+  --crema: #F6EDDC;
+  --beige: #ECDBBA;
+  --blanco-roto: #FBF6EC;
+  --dorado: #B08A52;
+
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Work Sans", "Segoe UI", sans-serif;
+
+  --radius: 2px;
+  --max-width: 1180px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ================= RESET ================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--crema);
+  color: var(--chocolate);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 500; margin: 0; }
+p { margin: 0; }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--chocolate);
+  color: var(--blanco-roto);
+  padding: 0.8em 1.2em;
+  z-index: 200;
+}
+.skip-link:focus { left: 0.5em; top: 0.5em; }
+
+:focus-visible {
+  outline: 2px solid var(--dorado);
+  outline-offset: 3px;
+}
+
+.section-fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.section-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 1em 2.2em;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+  min-height: 48px;
+}
+
+.btn-primary {
+  background: var(--chocolate);
+  color: var(--blanco-roto);
+  border-color: var(--chocolate);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--cafe);
+  border-color: var(--cafe);
+}
+
+.btn-instagram {
+  background: transparent;
+  color: var(--chocolate);
+  border-color: var(--chocolate);
+}
+.btn-instagram:hover,
+.btn-instagram:focus-visible {
+  background: var(--chocolate);
+  color: var(--blanco-roto);
+}
+.ig-icon { flex-shrink: 0; }
+
+/* ================= HEADER ================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(246, 237, 220, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(42, 24, 16, 0.1);
+  transition: box-shadow var(--transition);
+}
+.site-header.is-scrolled {
+  box-shadow: 0 4px 18px rgba(42, 24, 16, 0.07);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.7em 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  flex-shrink: 0;
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  color: var(--chocolate);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2.2em;
+}
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cafe);
+  position: relative;
+  padding: 0.3em 0;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 1px;
+  background: var(--dorado);
+  transition: width var(--transition);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after { width: 100%; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--chocolate);
+  transition: transform var(--transition), opacity var(--transition);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ================= HERO ================= */
+.hero {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3.5em 1.5em 5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5em;
+  align-items: center;
+}
+
+.hero-text { max-width: 460px; }
+
+.hero-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  margin-bottom: 1.4em;
+}
+
+.hero-brand {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--marron);
+  margin-bottom: 0.6em;
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1.08;
+  color: var(--chocolate);
+  margin-bottom: 0.5em;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--cafe);
+  margin-bottom: 1.8em;
+  max-width: 34ch;
+}
+
+.hero-media { position: relative; }
+
+.img-frame {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--beige);
+}
+.img-frame--hero { aspect-ratio: 4 / 5; }
+.img-frame--tall { aspect-ratio: 3 / 4; }
+.img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder visual shown while the real photography (images/alfajores-hero.jpg,
+   images/alfajores-2.jpg) has not been added yet. See images/README.txt */
+.img-frame.missing img { display: none; }
+.img-frame.missing {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 28%, rgba(42,24,16,0.14) 28% 30%, transparent 30% 44%, rgba(42,24,16,0.14) 44% 46%, transparent 46%),
+    linear-gradient(135deg, var(--beige), var(--marron-claro));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1.4em;
+}
+.img-frame.missing::after {
+  content: "Foto próxima­mente";
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--chocolate);
+  background: rgba(251, 246, 236, 0.75);
+  padding: 0.4em 1em;
+  border-radius: var(--radius);
+}
+
+/* ================= PRESENTACIÓN ================= */
+.presentacion {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2em 1.5em 6em;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3.5em;
+  align-items: center;
+}
+.presentacion-text h2 {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  color: var(--chocolate);
+  margin-bottom: 0.6em;
+  max-width: 14ch;
+}
+.presentacion-text p {
+  font-size: 1.05rem;
+  color: var(--cafe);
+  max-width: 46ch;
+}
+
+/* ================= RECETA ================= */
+.receta {
+  background: var(--blanco-roto);
+  padding: 5em 1.5em;
+  border-top: 1px solid rgba(42, 24, 16, 0.1);
+  border-bottom: 1px solid rgba(42, 24, 16, 0.1);
+}
+.receta-header {
+  max-width: var(--max-width);
+  margin: 0 auto 2.5em;
+  text-align: center;
+}
+.receta-header h2 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  color: var(--chocolate);
+}
+
+.receta-grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 3em;
+  padding-bottom: 3em;
+}
+
+.receta-bloque h3 {
+  font-size: 1.3rem;
+  color: var(--marron);
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--beige);
+}
+
+.lista-ingredientes { list-style: none; }
+.lista-ingredientes li {
+  position: relative;
+  padding: 0.6em 0 0.6em 1.4em;
+  border-bottom: 1px dashed rgba(42, 24, 16, 0.15);
+  font-size: 1rem;
+  color: var(--chocolate);
+}
+.lista-ingredientes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.2em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dorado);
+}
+
+.lista-pasos { list-style: none; counter-reset: none; }
+.lista-pasos li {
+  display: flex;
+  gap: 1em;
+  padding: 0.9em 0;
+  border-bottom: 1px dashed rgba(42, 24, 16, 0.15);
+}
+.lista-pasos li:last-child { border-bottom: none; }
+.paso-num {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--marron-claro);
+  flex-shrink: 0;
+  width: 1.4em;
+}
+.paso-texto {
+  color: var(--chocolate);
+  padding-top: 0.1em;
+}
+
+.subgrupo-titulo {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--marron);
+  margin: 1.6em 0 0.7em;
+}
+.receta-bloque h4.subgrupo-titulo:first-of-type {
+  margin-top: 0.2em;
+}
+
+.receta-foto {
+  margin: 1.4em 0 1.8em;
+}
+.img-frame--receta {
+  aspect-ratio: 16 / 10;
+}
+.receta-datos {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  padding-top: 2.5em;
+  border-top: 1px solid var(--beige);
+}
+.dato {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3em;
+}
+.dato-icono { font-size: 1.6rem; }
+.dato-label {
+  font-size: 0.85rem;
+  color: var(--marron);
+}
+.dato-valor {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--chocolate);
+}
+
+/* ================= FRASE ================= */
+.frase {
+  background: var(--chocolate);
+  color: var(--crema);
+  padding: 5em 1.5em;
+  text-align: center;
+}
+.frase p {
+  max-width: 26ch;
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.4;
+}
+
+/* ================= INSTAGRAM ================= */
+.instagram {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 6em 1.5em;
+  text-align: center;
+}
+.instagram h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem);
+  color: var(--chocolate);
+  margin-bottom: 0.3em;
+}
+.instagram-sub {
+  font-size: 1.05rem;
+  color: var(--cafe);
+  margin-bottom: 0.2em;
+}
+.instagram-usuario {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--marron);
+  font-size: 1.1rem;
+  margin-bottom: 1.8em;
+}
+
+/* ================= FOOTER ================= */
+.site-footer {
+  background: var(--cafe);
+  color: var(--beige);
+  padding: 2.5em 1.5em;
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  text-align: center;
+}
+.footer-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  margin-bottom: 0.4em;
+}
+
+/* Reemplazo visual mientras images/logo.png todavía no fue agregado */
+.logo-missing {
+  content: "";
+  background: var(--beige);
+  border: 1px solid var(--marron-claro);
+}
+.footer-brand {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--blanco-roto);
+}
+.footer-ig { font-size: 0.9rem; color: var(--dorado); }
+.footer-ig:hover { text-decoration: underline; }
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(236, 219, 186, 0.7);
+  margin-top: 0.6em;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 2.4em; padding-top: 2.5em; }
+  .hero-text { max-width: 100%; }
+  .presentacion { grid-template-columns: 1fr; gap: 2em; }
+  .presentacion-media { order: -1; }
+  .receta-grid { grid-template-columns: 1fr; gap: 2.5em; }
+}
+
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--blanco-roto);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0.5em 1.5em 1em;
+    border-bottom: 1px solid rgba(42, 24, 16, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition);
+  }
+  .nav.is-open { max-height: 220px; }
+  .nav-link {
+    width: 100%;
+    padding: 0.9em 0;
+    border-bottom: 1px dashed rgba(42, 24, 16, 0.12);
+    font-size: 1rem;
+  }
+
+  .receta-datos { flex-direction: column; gap: 1.6em; }
+  .dato { flex-direction: row; justify-content: center; gap: 0.6em; text-align: left; }
+  .dato-icono { font-size: 1.3rem; }
+}
+
+@media (max-width: 480px) {
+  .header-inner { padding: 0.6em 1.1em; }
+  .brand-name { font-size: 1rem; }
+  .hero, .presentacion, .instagram { padding-left: 1.1em; padding-right: 1.1em; }
+  .receta { padding-left: 1.1em; padding-right: 1.1em; }
+  .btn { width: 100%; }
+  .hero-title { font-size: 2.1rem; }
+}
+.preparacion-seccion {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Invertimos el tamaño para la foto y el texto */
+    gap: 2rem;
+    align-items: start;
+    direction: rtl; /* Hace que el primer elemento (lista) vaya a la derecha y el segundo (foto) a la izquierda */
+}
+
